@@ -1,10 +1,35 @@
 import 'package:wanflorist/struktur/linked_list.dart';
 import 'package:wanflorist/entitas/produk.dart';
 import 'package:wanflorist/struktur/node.dart';
+import "package:wanflorist/layanan/penyimpanan.dart";
 
 class KatalogProduk {
   LinkedList<Produk> daftarProduk = LinkedList();
+  Penyimpanan penyimpanan = Penyimpanan();
   int idCounter = 1;
+
+  KatalogProduk() {
+    muat();
+  }
+
+  void muat() {
+    List<Produk> listProduk = penyimpanan.muatProduk();
+    for (var produk in listProduk) {
+      daftarProduk.insertBack(produk);
+      int nomorId = int.tryParse(produk.id.replaceAll('PROD', '')) ?? 0;
+      if (nomorId >= idCounter) idCounter = nomorId + 1;
+    }
+  }
+
+  List<Produk> _keList() {
+    List<Produk> hasil = [];
+    Node<Produk>? sekarang = daftarProduk.head;
+    while (sekarang != null) {
+      hasil.add(sekarang.nodeValue);
+      sekarang = sekarang.next;
+    }
+    return hasil;
+  }
 
   void tambahProduk(String nama, String kategori, double harga, int stok) {
     String id = 'PROD$idCounter';
@@ -17,6 +42,7 @@ class KatalogProduk {
       stok: stok,
     );
     daftarProduk.insertBack(produkBaru);
+    penyimpanan.simpanProduk(_keList());
     print('Produk "$nama" berhasil ditambahkan.');
   }
 
@@ -27,6 +53,7 @@ class KatalogProduk {
     }
     if (daftarProduk.head!.nodeValue.id == id) {
       daftarProduk.deleteFront();
+      penyimpanan.simpanProduk(_keList());
       print('Produk berhasil dihapus.');
       return;
     }
@@ -34,6 +61,7 @@ class KatalogProduk {
     while (sekarang!.next != null) {
       if (sekarang.next!.nodeValue.id == id) {
         sekarang.next = sekarang.next!.next;
+        penyimpanan.simpanProduk(_keList());
         print('Produk berhasil dihapus.');
         return;
       }
