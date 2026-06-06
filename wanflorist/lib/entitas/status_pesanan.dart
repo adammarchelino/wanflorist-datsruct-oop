@@ -1,0 +1,1 @@
+enum StatusPesanan { antri, selesai }

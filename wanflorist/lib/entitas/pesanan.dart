@@ -1,17 +1,20 @@
 import 'detail_pesanan.dart';
+import 'status_pesanan.dart';
+import 'entitas.dart';
 
-class Pesanan {
+class Pesanan extends Entitas {
+  @override
   String id;
   String namaPelanggan;
   String alamat;
-  String status;
+  StatusPesanan status;
   List<DetailPesanan> details;
 
   Pesanan({
     required this.id,
     required this.namaPelanggan,
     required this.alamat,
-    this.status = 'antri',
+    this.status = StatusPesanan.antri,
     required this.details,
   });
 
@@ -24,7 +27,12 @@ class Pesanan {
   }
 
   @override
+  String info() {
+    return '$id $namaPelanggan $alamat ${status.name} Rp${total()}';
+  }
+
+  @override
   String toString() {
-    return '$id $namaPelanggan $alamat $status Rp${total()}';
+    return '$id $namaPelanggan $alamat ${status.name} Rp${total()}';
   }
 }

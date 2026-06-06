@@ -3,6 +3,7 @@ import 'package:wanflorist/struktur/node.dart';
 import 'package:wanflorist/struktur/stack_log.dart';
 import 'package:wanflorist/entitas/pesanan.dart';
 import 'package:wanflorist/entitas/detail_pesanan.dart';
+import 'package:wanflorist/entitas/status_pesanan.dart';
 
 class AntrianPesanan {
   QueuePesanan antrian = QueuePesanan();
@@ -30,7 +31,7 @@ class AntrianPesanan {
   void prosesPesanan() {
     Pesanan? pesanan = antrian.dequeue();
     if (pesanan != null) {
-      pesanan.status = 'selesai';
+      pesanan.status = StatusPesanan.selesai;
       log.push('Pesanan ${pesanan.id} selesai diproses');
       print(
         'Pesanan ${pesanan.id} milik ${pesanan.namaPelanggan} selesai diproses.',
@@ -42,7 +43,7 @@ class AntrianPesanan {
     Node<Pesanan>? sekarang = antrian.head;
     while (sekarang != null) {
       if (sekarang.nodeValue.id.toLowerCase() == id.toLowerCase() &&
-          sekarang.nodeValue.status == 'antri') {
+          sekarang.nodeValue.status == StatusPesanan.antri) {
         sekarang.nodeValue.namaPelanggan = namaPelanggan;
         sekarang.nodeValue.alamat = alamat;
         log.push('Pesanan $id telah diedit');
@@ -59,7 +60,7 @@ class AntrianPesanan {
     Node<Pesanan>? sekarang = antrian.head;
     while (sekarang != null) {
       if (sekarang.nodeValue.id.toLowerCase() == id.toLowerCase() &&
-          sekarang.nodeValue.status == 'antri') {
+          sekarang.nodeValue.status == StatusPesanan.antri) {
         return sekarang.nodeValue;
       }
       sekarang = sekarang.next;
