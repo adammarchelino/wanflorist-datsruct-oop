@@ -107,7 +107,7 @@ class KatalogProduk {
     return null;
   }
 
-  // Cari produk berdasarkan ID (case-insensitive)
+  // Cari produk berdasarkan ID (sudah di atasi dengan lowercase)
   Produk? cariProdukById(String id) {
     Node<Produk>? sekarang = daftarProduk.head;
     while (sekarang != null) {

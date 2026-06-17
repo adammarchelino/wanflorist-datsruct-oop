@@ -7,7 +7,7 @@
 ## Checklist KAD
 
 | KAD | Konsep | Status Implementasi |
-|-----|--------|---------------------|
+| --- | ------ | ------------------- |
 | 1 | Minimal 3 class + konstruktor | ✅ Sudah |
 | 2 | Minimal 3 class + konstruktor | ✅ Sudah |
 | 3 | Encapsulation | ✅ Sudah |
